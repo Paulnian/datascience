@@ -154,13 +154,13 @@ def main():
     # Add Google Analytics
     ga_script = """
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M5Q3F4YGCB"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2HLVL8PYXQ"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'G-M5Q3F4YGCB');
+        gtag('config', 'G-2HLVL8PYXQ');
 
         // Track Streamlit page views
         gtag('event', 'page_view', {
