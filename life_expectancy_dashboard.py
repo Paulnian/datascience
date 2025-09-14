@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -31,6 +32,7 @@ from enhanced_advanced_analytics import render_enhanced_advanced_analytics
 from enhanced_interactive_explorer import render_enhanced_interactive_explorer
 from enhanced_key_insights import render_enhanced_key_insights
 from enhanced_about import render_enhanced_about
+from analytics_tracker import integrate_analytics, AnalyticsTracker
 
 # Page configuration
 st.set_page_config(
@@ -146,6 +148,30 @@ def perform_clustering(df):
 
 # Main app
 def main():
+    # Initialize analytics tracking
+    tracker = integrate_analytics("Dashboard Home")
+
+    # Add Google Analytics
+    ga_script = """
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M5Q3F4YGCB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-M5Q3F4YGCB');
+
+        // Track Streamlit page views
+        gtag('event', 'page_view', {
+            'page_title': 'Life Expectancy Dashboard',
+            'page_location': window.location.href,
+            'page_path': window.location.pathname
+        });
+    </script>
+    """
+    components.html(ga_script, height=0)
+
     # Header
     st.markdown('<h1 class="main-header">Global Life Expectancy Analytics Dashboard</h1>', unsafe_allow_html=True)
 
@@ -220,30 +246,37 @@ def main():
     ])
 
     with tab1:
+        tracker.track_page_view("Overview Tab")
         # Use the enhanced overview
         render_enhanced_overview(df, filtered_df)
 
     with tab2:
+        tracker.track_page_view("Geographic Analysis Tab")
         # Use the enhanced geographic analysis
         render_enhanced_geographic_analysis(df, filtered_df)
 
     with tab3:
+        tracker.track_page_view("Factor Analysis Tab")
         # Use the enhanced factor analysis
         render_enhanced_factor_analysis(filtered_df, tab3)
 
     with tab4:
+        tracker.track_page_view("Advanced Analytics Tab")
         # Use the enhanced advanced analytics
         render_enhanced_advanced_analytics(df, filtered_df)
 
     with tab5:
+        tracker.track_page_view("Key Insights Tab")
         # Use the enhanced key insights
         render_enhanced_key_insights(df, filtered_df)
 
     with tab6:
+        tracker.track_page_view("Interactive Explorer Tab")
         # Use the enhanced interactive explorer
         render_enhanced_interactive_explorer(df, filtered_df)
 
     with tab7:
+        tracker.track_page_view("About Tab")
         # Use the enhanced about page
         render_enhanced_about(df)
 
