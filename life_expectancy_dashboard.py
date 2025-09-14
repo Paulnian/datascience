@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -42,17 +41,37 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for better styling
+# Google Analytics and Custom CSS
 st.markdown("""
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2HLVL8PYXQ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2HLVL8PYXQ');
+    gtag('event', 'page_view', {
+        'page_title': 'Life Expectancy Dashboard',
+        'page_location': window.location.href
+    });
+</script>
+
 <style>
+    /* Remove top padding/margin */
+    .main .block-container {
+        padding-top: 1rem !important;
+        padding-bottom: 0rem !important;
+    }
+
     .main-header {
         font-size: 3rem;
         color: #1f77b4;
         text-align: center;
-        padding: 1.5rem 0;
+        padding: 1rem 0;
         background: linear-gradient(90deg, #f0f2f6 0%, #e6e9ef 100%);
         border-radius: 10px;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
+        margin-top: 0rem;
     }
     .metric-card {
         background-color: #f0f2f6;
@@ -150,27 +169,6 @@ def perform_clustering(df):
 def main():
     # Initialize analytics tracking
     tracker = integrate_analytics("Dashboard Home")
-
-    # Add Google Analytics
-    ga_script = """
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2HLVL8PYXQ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-2HLVL8PYXQ');
-
-        // Track Streamlit page views
-        gtag('event', 'page_view', {
-            'page_title': 'Life Expectancy Dashboard',
-            'page_location': window.location.href,
-            'page_path': window.location.pathname
-        });
-    </script>
-    """
-    components.html(ga_script, height=0)
 
     # Header
     st.markdown('<h1 class="main-header">Global Life Expectancy Analytics Dashboard</h1>', unsafe_allow_html=True)

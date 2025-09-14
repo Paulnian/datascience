@@ -153,20 +153,6 @@ class AnalyticsTracker:
             (duration > 300 or interactions > 20)
         )
 
-    def display_privacy_notice(self):
-        """Display minimal privacy notice"""
-        # This creates a small, unobtrusive notice
-        st.markdown(
-            """
-            <div style='position: fixed; bottom: 10px; right: 10px;
-                        background: rgba(255,255,255,0.9); padding: 5px 10px;
-                        border-radius: 5px; font-size: 11px; color: #666;
-                        z-index: 1000; max-width: 200px;'>
-                📊 Anonymous analytics enabled for improvement purposes
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
 
 
 # Simpler alternative using Google Analytics
@@ -212,9 +198,6 @@ def integrate_analytics(page_name: str = None):
     # Track page view if provided
     if page_name:
         tracker.track_page_view(page_name)
-
-    # Display privacy notice (required for legal compliance)
-    tracker.display_privacy_notice()
 
     # Check if should send report
     if tracker.should_send_report():
